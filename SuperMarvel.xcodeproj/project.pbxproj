@@ -56,8 +56,8 @@
 		2AE502D72B06B55D0061C3DE /* SuperMarvel */ = {
 			isa = PBXGroup;
 			children = (
-				2AE502D82B06B55D0061C3DE /* AppDelegate.swift */,
-				2AE502DA2B06B55D0061C3DE /* SceneDelegate.swift */,
+				2AE502ED2B06B7540061C3DE /* DataModel */,
+				2AE502EC2B06B6BD0061C3DE /* Core */,
 				2AE502DC2B06B55D0061C3DE /* ViewController.swift */,
 				2AE502DE2B06B55D0061C3DE /* Main.storyboard */,
 				2AE502E12B06B55F0061C3DE /* Assets.xcassets */,
@@ -65,6 +65,22 @@
 				2AE502E62B06B55F0061C3DE /* Info.plist */,
 			);
 			path = SuperMarvel;
+			sourceTree = "<group>";
+		};
+		2AE502EC2B06B6BD0061C3DE /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				2AE502D82B06B55D0061C3DE /* AppDelegate.swift */,
+				2AE502DA2B06B55D0061C3DE /* SceneDelegate.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		2AE502ED2B06B7540061C3DE /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
