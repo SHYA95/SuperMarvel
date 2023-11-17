@@ -1,0 +1,60 @@
+
+SuperMarvel.xcodeproj/xcuserdata/eslamabdelmaqsoud.xcuserdatad/xcdebugger/
+xcuserdata/
+build/
+DerivedData/
+
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+.build/
+
+# CocoaPods
+
+Pods/
+Podfile.lock
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Code Injection
+# After new code Injection tools there's a generated folder /iOSInjectionProject
+# https://github.com/johnno1962/injectionforxcode
+
+iOSInjectionProject/
+
+#R.swift
+*.generated.swift
+.DS_Store
+
+Gemfile.lock
+
+SuperMarvel.xcworkspace/xcshareddata/
+
+*.xcworkspacedata
+
+SuperMarvel.xcworkspace/xcshareddata/
+
+.env
+
+ArkanaKeys/ArkanaKeys/
+
+ArkanaKeys/ArkanaKeysInterfaces/
+
+# Generated
+*.generated.swift
+
+# Binaries
+Pods/MockingbirdFramework/mockingbird/bin/
+
+# Caches
+**/*.xcodeproj/MockingbirdCache/
