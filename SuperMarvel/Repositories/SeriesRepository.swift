@@ -1,16 +1,17 @@
-//
-//  CharacterRepository.swift
-//  SuperMarvel
-//
-//  Created by Shrouk Yasser on 17/11/2023.
+////
+////  CharacterRepository.swift
+////  SuperMarvel
+////
+////  Created by Shrouk Yasser on 17/11/2023.
+////
 //
 
-// CharacterRepositoryProtocol.swift
 import Foundation
 
 protocol SeriesRepositoryProtocol: AnyObject {
-    func getSeries(offset: Int, completion: @escaping SeriesResults)
+    func getSeries(offset: Int, completion: @escaping (Result<MarvelResponse, ServerError>) -> Void)
 }
+
 
 final class SeriesRepository: NSObject, SeriesRepositoryProtocol {
     private let seriesRequests: SeriesRequestProtocol
@@ -19,7 +20,7 @@ final class SeriesRepository: NSObject, SeriesRepositoryProtocol {
         self.seriesRequests = seriesRequests
     }
 
-    func getSeries(offset: Int, completion: @escaping SeriesResults) {
+    func getSeries(offset: Int, completion: @escaping (Result<MarvelResponse, ServerError>) -> Void) {
         seriesRequests.getSeries(offset: offset, completion: completion)
     }
 }
