@@ -6,60 +6,73 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 class MoviesViewController: UIViewController {
-    
     @IBOutlet weak var moviesSearchBar: UISearchBar!
     @IBOutlet weak var moviesTableView: UITableView!
-    
+
     var viewModel: SeriesViewModelProtocol!
+    private var loader: NVActivityIndicatorView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Initialize your viewModel with the appropriate parameters
-        viewModel = SeriesViewModel(seriesUC: DefaultSeriesUC(repository: SeriesRepository(seriesRequests: SeriesRequest())))
 
-        // Now you can safely call getSeries
-        viewModel.getSeries()
-        
+        viewModel = SeriesViewModel(seriesUC: DefaultSeriesUseCase(repository: SeriesRepository(seriesRequests: SeriesRequest())))
+
         setupUI()
+        setupViewModelObservers()
         setupTableView()
+
+        DispatchQueue.main.async {
+            self.showLoader()
+            self.viewModel.getSeries()
+        }
     }
 
-    
-    private func setupUI() {
-        moviesSearchBar.layer.cornerRadius = 15
-        moviesSearchBar.layer.masksToBounds = true
-        moviesSearchBar.layer.borderColor = UIColor.red.cgColor
-        moviesSearchBar.layer.borderWidth = 1.0
-        
-        if let textField = moviesSearchBar.value(forKey: "searchField") as? UITextField {
-            textField.textColor = .white
-            textField.backgroundColor = .clear
-            textField.layer.cornerRadius = 10.5
-            textField.layer.masksToBounds = true
-            textField.layer.borderWidth = 1.0
-            
-            if let placeholderLabel = textField.value(forKey: "placeholderLabel") as? UILabel {
-                placeholderLabel.textColor = .white
+
+    private func setupViewModelObservers() {
+        viewModel.dataUpdated = { [weak self] in
+            DispatchQueue.main.async {
+                self?.hideLoader()
+                self?.moviesTableView.reloadData()
+            }
+        }
+
+        viewModel.shouldReloadCallback = { [weak self] in
+            DispatchQueue.main.async {
+                self?.hideLoader()
+                self?.moviesTableView.reloadData()
+            }
+        }
+
+        viewModel.shouldStopRefresherCallback = { [weak self] in
+            DispatchQueue.main.async {
+                self?.hideLoader()
+            }
+        }
+
+        viewModel.showErrorMessageCallback = { [weak self] errorMessage in
+            DispatchQueue.main.async {
+                self?.hideLoader()
             }
         }
     }
+
     private func setupTableView() {
+        // Assign the search bar delegate
+        moviesSearchBar.delegate = self
         moviesTableView.delegate = self
         moviesTableView.dataSource = self
         moviesTableView.register(UINib(nibName: "MoviesTableViewCell", bundle: nil), forCellReuseIdentifier: MoviesTableViewCell.identifier)
         moviesTableView.tableFooterView = UIView()
         moviesTableView.backgroundColor = .black
     }
-    
-    
 }
+
 // MARK: - UITableViewDataSource
 
 extension MoviesViewController: UITableViewDataSource {
-
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.seriesCount
     }
@@ -72,6 +85,7 @@ extension MoviesViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MoviesTableViewCell.identifier, for: indexPath) as? MoviesTableViewCell else {
             return UITableViewCell()
         }
+        viewModel.configure(cell: cell, index: indexPath.section)
         return cell
     }
 }
@@ -79,7 +93,6 @@ extension MoviesViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension MoviesViewController: UITableViewDelegate {
-
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 8.0
     }
@@ -89,18 +102,14 @@ extension MoviesViewController: UITableViewDelegate {
         headerView.backgroundColor = .clear
         return headerView
     }
-}
 
-// MARK: - UISearchBarDelegate
-
-extension MoviesViewController: UISearchBarDelegate {
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // Implement search functionality here
-        // Example:
-        // viewModel.searchMovies(query: searchText) { [weak self] movies in
-        //     self?.movies = movies
-        //     self?.moviesTableView.reloadData()
-        // }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let selectedSeries = viewModel.getSelectedSeries(at: indexPath.section) else {
+            return
+        }
+        let detailsMoviesViewController = MovieDetailsViewController(series: selectedSeries)
+        self.reloadToSelectedPage(to: detailsMoviesViewController)
     }
 }
+
+

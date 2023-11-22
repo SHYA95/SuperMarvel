@@ -4,13 +4,13 @@
 //
 //  Created by Shrouk Yasser on 17/11/2023.
 //
+
 import Moya
 import Foundation
 
 extension MoyaProvider {
-    
-    func request<T: Codable>(_ target: Target, type: T.Type, completion: @escaping (Result<T, ServerError>) -> Void) {
-        self.request(target) { result in
+    func request<T: Codable>(_ target: Target, type: T.Type, completion: @escaping (Result<T, ServerError>) -> Void) -> Cancellable {
+        return self.request(target) { result in
             switch result {
             case .success(let response):
                 if (200 ... 299) ~= response.statusCode {
@@ -28,7 +28,7 @@ extension MoyaProvider {
                         completion(.failure(ServerError.serialization))
                     }
                 }
-            case .failure:
+            case .failure(_):
                 completion(.failure(ServerError.network))
             }
         }
