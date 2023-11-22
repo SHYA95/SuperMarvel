@@ -7,23 +7,34 @@
 
 import Foundation
 
-final class SeriesMapper {
-    static let instance = SeriesMapper()
+final class SeriesModelMapper {
+    static let instance = SeriesModelMapper()
     private init() {}
 
-    func mapToSeries(series: [SeriesDTO]?) -> [SeriesModel] {
-        series?.compactMap { seriesDTO in
-            SeriesModel(id: seriesDTO.id ?? 0,
-                        title: seriesDTO.name ?? "",
-                        description: seriesDTO.description ?? "",
-                        resourceURI: "",
-                        startYear: 0,
-                        endYear: 0,
-                        rating: "",
-                        modified: seriesDTO.modified ?? "",
-                        image: seriesDTO.imageUrlPath,
-                        comics: seriesDTO.comics?.items ?? [],
-                        stories: seriesDTO.stories?.items ?? [])
+    func mapToMarvelResponses(from seriesResultDTOs: [MarvelResult]?) -> [MarvelResponse] {
+        return seriesResultDTOs?.compactMap { seriesResultDTO in
+            mapToMarvelResponse(from: seriesResultDTO)
         } ?? []
+    }
+
+    private func mapToMarvelResponse(from seriesResultDTO: MarvelResult) -> MarvelResponse {
+        return MarvelResponse(
+            code: seriesResultDTO.id,
+            status: seriesResultDTO.title,
+            copyright: seriesResultDTO.description, attributionText: "",
+            attributionHTML: "",
+            etag: seriesResultDTO.thumbnail?.fullPath ?? "",
+            data: mapToMarvelData(from: seriesResultDTO)
+        )
+    }
+
+    private func mapToMarvelData(from seriesResultDTO: MarvelResult) -> MarvelData {
+        return MarvelData(
+            offset: 0,
+            limit: 0,
+            total: 0,
+            count: 0,
+            results: [seriesResultDTO] 
+        )
     }
 }
