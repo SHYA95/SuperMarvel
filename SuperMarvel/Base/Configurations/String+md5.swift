@@ -8,12 +8,6 @@
 import UIKit
 import CryptoKit
 
-let publicKey = "0aad0a575419bbd9e7e6a7777ef1b446"
-let privateKey = "6684e4964bfd09e2cebd57f30607904015e193ee"
-
-//let publicKey = Configurations.getValue(for: "Public_Key")
-//let privateKey = Configurations.getValue(for: "Private_Key")
-//
 
 //MARK: - Get MD5 Method
 func MD5(string: String) -> String {

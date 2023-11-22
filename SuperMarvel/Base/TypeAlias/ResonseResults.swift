@@ -8,4 +8,5 @@
 
 import Foundation
 
-typealias SeriesResults = (Result<MarvelBaseResponseModel<SeriesDTO>, ServerError>) -> Void
+
+typealias SeriesResults = (Result<MarvelResponse, ServerError>) -> Void
