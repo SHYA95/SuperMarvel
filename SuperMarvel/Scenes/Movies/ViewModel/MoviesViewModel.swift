@@ -1,9 +1,3 @@
-//
-//  MoviesViewModel.swift
-//  SuperMarvel
-//
-//  Created by Shrouk Yasser on 18/11/2023.
-//
 import Foundation
 
 protocol SeriesViewModelProtocol {
@@ -25,9 +19,7 @@ protocol SeriesViewModelProtocol {
     func didSelectSeries(at index: Int)
 }
 
-
 class SeriesViewModel: SeriesViewModelProtocol {
- 
     private let seriesUC: SeriesUseCase
     private var series: [MarvelResponse] = []
     
@@ -45,7 +37,6 @@ class SeriesViewModel: SeriesViewModelProtocol {
         }
     }
 
-    
     init(seriesUC: SeriesUseCase) {
         self.seriesUC = seriesUC
     }
@@ -53,38 +44,41 @@ class SeriesViewModel: SeriesViewModelProtocol {
     func getSeries() {
         isLoading = true
         let params = SeriesParams(offset: offset)
-        
+
         seriesUC.execute(with: params) { [weak self] result in
             guard let self = self else { return }
-            
-            self.isLoading = false
-            
+
+            defer {
+                self.isLoading = false
+            }
+
             switch result {
             case .success(let response):
                 if let data = response.data {
-                    self.totalSeriesCount = data.count ?? 0
-                    
+                    self.totalSeriesCount = data.total ?? 0
+
                     if let results = data.results {
                         let series = SeriesModelMapper.instance.mapToMarvelResponses(from: results)
                         self.series.append(contentsOf: series)
-                        print(series)
+                        print("Received \(series.count) new items. Total items: \(self.series.count)")
                         self.dataUpdated?()
                     } else {
-                        print(series)
+                        print("No results")
                     }
                 }
-                
+
             case .failure(let error):
                 self.isEmptyState = true
                 self.showErrorMessageCallback?(error.localizedDescription)
-                print(error)
+                print("Error: \(error)")
             }
-            
+
             self.shouldStopRefresherCallback?()
         }
     }
 
     private var filteredSeries: [MarvelResponse] = []
+
     func searchSeries(query: String) {
         filteredSeries = series.filter { $0.data?.results?.first?.title?.localizedCaseInsensitiveContains(query) == true }
         dataUpdated?()
@@ -100,18 +94,24 @@ class SeriesViewModel: SeriesViewModelProtocol {
         let viewData = SeriesViewModelMapper.instance.mapToViewData(from: seriesItem)
         cell.configureCell(series: viewData)
     }
- 
 
     func didSelectSeries(at index: Int) {
         print("Did select series at index \(index)")
     }
 
-
     func getMoreSeries() {
+        guard !isLoading else {
+            return
+        }
+        guard seriesCount < totalSeriesCount else {
+            return
+        }
+        
+        isLoading = true
         offset += Configurations.pageSize
+        print("offsets:\(offset)")
         getSeries()
     }
-
 
     func didPullToRefresh() {
         offset = 0

@@ -23,13 +23,13 @@ class MoviesViewController: UIViewController {
         setupUI()
         setupViewModelObservers()
         setupTableView()
+        scrollViewDidScroll(moviesTableView)
 
         DispatchQueue.main.async {
             self.showLoader()
             self.viewModel.getSeries()
         }
     }
-
 
     private func setupViewModelObservers() {
         viewModel.dataUpdated = { [weak self] in
@@ -111,5 +111,4 @@ extension MoviesViewController: UITableViewDelegate {
         self.reloadToSelectedPage(to: detailsMoviesViewController)
     }
 }
-
 
