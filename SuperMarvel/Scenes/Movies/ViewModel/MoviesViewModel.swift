@@ -81,6 +81,7 @@ class SeriesViewModel: SeriesViewModelProtocol {
 
     func searchSeries(query: String) {
         filteredSeries = series.filter { $0.data?.results?.first?.title?.localizedCaseInsensitiveContains(query) == true }
+
         dataUpdated?()
     }
 

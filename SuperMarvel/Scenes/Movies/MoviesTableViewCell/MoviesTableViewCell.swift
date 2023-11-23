@@ -31,6 +31,7 @@ class MoviesTableViewCell: UITableViewCell {
         movieYear.text = year
         movieRate.text = rate
         movieImageCell.image = image
+        movieImageCell.layer.cornerRadius = 15
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -15,6 +15,14 @@ extension UIViewController {
         loader = NVActivityIndicatorView(frame: .zero, type: .ballClipRotate, color: .white, padding: nil)
         loader?.center = view.center
         view.addSubview(loader!)
+//        loader?.frame = loaderFrame
+        loader?.type = .ballClipRotateMultiple
+        loader?.color = .white
+        loader?.padding = 20.0
+        loader?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        loader?.layer.cornerRadius = 5.0
+        loader?.isHidden = true
+    
     }
 
     func showLoader() {
@@ -25,3 +33,6 @@ extension UIViewController {
         loader?.stopAnimating()
     }
 }
+
+
+

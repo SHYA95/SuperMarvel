@@ -11,7 +11,7 @@ extension MoviesViewController {
     func setupUI() {
         moviesSearchBar.layer.cornerRadius = 15
         moviesSearchBar.layer.masksToBounds = true
-        moviesSearchBar.layer.borderColor = UIColor.red.cgColor
+        moviesSearchBar.layer.borderColor = UIColor.white.cgColor
         moviesSearchBar.layer.borderWidth = 1.0
 
         if let textField = moviesSearchBar.value(forKey: "searchField") as? UITextField {

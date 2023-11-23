@@ -7,11 +7,22 @@
 
 
 import UIKit
-extension UIViewController {
-    func reloadToSelectedPage(to vc: UIViewController) {
-        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {
-            return
-        }
-        window.rootViewController = vc
+
+struct MovingTo {
+    static func presentMoviesViewController(on vc: UIViewController) {
+        let moviesViewController = MoviesViewController(nibName: "MoviesViewController", bundle: nil)
+        moviesViewController.modalPresentationStyle = .fullScreen
+        vc.present(moviesViewController, animated: true, completion: nil)
+    }
+
+    static func dismissMoviesViewController(on vc: UIViewController) {
+        vc.dismiss(animated: true, completion: nil)
+    }
+
+    static func movieDetailsViewController(on vc: UIViewController, selectedSeries: MarvelResult) {
+        let page = MovieDetailsViewController(nibName: "MovieDetailsViewController", bundle: nil)
+        page.selectedSeries = selectedSeries
+        page.modalPresentationStyle = .fullScreen
+        vc.present(page, animated: true, completion: nil)
     }
 }

@@ -9,7 +9,7 @@ import Kingfisher
 import NVActivityIndicatorView
 
 class MovieDetailsViewController: UIViewController {
-
+    
     @IBOutlet weak var endTime: UILabel!
     @IBOutlet weak var seriesName: UILabel!
     @IBOutlet weak var detailsImageView: UIImageView!
@@ -26,13 +26,19 @@ class MovieDetailsViewController: UIViewController {
         self.selectedSeries = series
     }
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
+    }
+    
+    
     let randomRating = Int(arc4random_uniform(9) + 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupData()
     }
-
+    
     func setupData() {
         guard let series = selectedSeries else {
             return
@@ -58,17 +64,17 @@ class MovieDetailsViewController: UIViewController {
         } else {
             ratingDate.text = "\(randomRating)"
         }
-
+        
         if let startYear = series.startYear, let endYear = series.endYear {
             releaseTime.text = "From: \(startYear) To: \(endYear)"
             endTime.text = "\(endYear)"
         } else {
             releaseTime.text = "Not Available"
         }
-
+        
         let imagePath = series.thumbnail?.path ?? ""
         let seriesImageURLString = "\(imagePath).jpg"
-
+        
         if let seriesImageURL = URL(string: seriesImageURLString) {
             detailsImageView.kf.setImage(with: seriesImageURL)
         } else {
@@ -81,8 +87,6 @@ class MovieDetailsViewController: UIViewController {
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
-        let movieView = "MoviesViewController"
-        let moviesViewController = MoviesViewController(nibName: movieView, bundle: nil)
-        self.reloadToSelectedPage(to: moviesViewController)
+        MovingTo.dismissMoviesViewController(on: self)
     }
 }
