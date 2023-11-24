@@ -24,6 +24,11 @@
 		2AC91ECD2B0DED8600DDC64F /* searchBarEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC91ECC2B0DED8600DDC64F /* searchBarEX.swift */; };
 		2AC91ECF2B0DEEDB00DDC64F /* CellSetupEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC91ECE2B0DEEDB00DDC64F /* CellSetupEX.swift */; };
 		2AC91ED12B0DF18C00DDC64F /* LouderEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC91ED02B0DF18C00DDC64F /* LouderEX.swift */; };
+		2AC91F042B1160E200DDC64F /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 2AC91E8D2B0A577600DDC64F /* CombineMoya */; };
+		2AC91F052B1160E200DDC64F /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 2AC91E8E2B0A577600DDC64F /* Moya */; };
+		2AC91F062B1160E200DDC64F /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 2AC91E8F2B0A577600DDC64F /* ReactiveMoya */; };
+		2AC91F072B1160E200DDC64F /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 2AC91E902B0A577600DDC64F /* RxMoya */; };
+		2AC91F092B11610F00DDC64F /* DateEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC91F082B11610F00DDC64F /* DateEX.swift */; };
 		2AE502D92B06B55D0061C3DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE502D82B06B55D0061C3DE /* AppDelegate.swift */; };
 		2AE502DB2B06B55D0061C3DE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE502DA2B06B55D0061C3DE /* SceneDelegate.swift */; };
 		2AE502E52B06B55F0061C3DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AE502E32B06B55F0061C3DE /* LaunchScreen.storyboard */; };
@@ -106,6 +111,7 @@
 		2AC91ECC2B0DED8600DDC64F /* searchBarEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchBarEX.swift; sourceTree = "<group>"; };
 		2AC91ECE2B0DEEDB00DDC64F /* CellSetupEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSetupEX.swift; sourceTree = "<group>"; };
 		2AC91ED02B0DF18C00DDC64F /* LouderEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LouderEX.swift; sourceTree = "<group>"; };
+		2AC91F082B11610F00DDC64F /* DateEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateEX.swift; sourceTree = "<group>"; };
 		2AE502D52B06B55D0061C3DE /* SuperMarvel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperMarvel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AE502D82B06B55D0061C3DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AE502DA2B06B55D0061C3DE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +165,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AC91F072B1160E200DDC64F /* RxMoya in Frameworks */,
+				2AC91F062B1160E200DDC64F /* ReactiveMoya in Frameworks */,
+				2AC91F052B1160E200DDC64F /* Moya in Frameworks */,
+				2AC91F042B1160E200DDC64F /* CombineMoya in Frameworks */,
 				2AC91EBE2B0C1C7100DDC64F /* Kingfisher in Frameworks */,
 				2AC91EAB2B0A586D00DDC64F /* Moya.framework in Frameworks */,
 				2AC91EC12B0C1D3F00DDC64F /* NVActivityIndicatorView in Frameworks */,
@@ -282,6 +292,7 @@
 		2AE502F72B0750D40061C3DE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2AC91F082B11610F00DDC64F /* DateEX.swift */,
 				2AC91EC62B0DEB7A00DDC64F /* SearchEX.swift */,
 				2AC91EC82B0DEC7600DDC64F /* NavigationEX.swift */,
 				2AC91ECA2B0DED1900DDC64F /* scrollViewEX.swift */,
@@ -669,6 +680,7 @@
 				2AE503182B0765220061C3DE /* URLS.swift in Sources */,
 				2AC91EC92B0DEC7600DDC64F /* NavigationEX.swift in Sources */,
 				2AE503322B07F1180061C3DE /* MoviesViewController.swift in Sources */,
+				2AC91F092B11610F00DDC64F /* DateEX.swift in Sources */,
 				2AE502D92B06B55D0061C3DE /* AppDelegate.swift in Sources */,
 				2AE503122B0761AF0061C3DE /* SeriesModel.swift in Sources */,
 				2AE503072B075A420061C3DE /* MoyaProvider.swift in Sources */,
