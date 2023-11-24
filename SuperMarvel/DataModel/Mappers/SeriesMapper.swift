@@ -1,6 +1,4 @@
-//
-//  CharacterMapper.swift
-//  SuperMarvel
+
 //
 //  Created by Shrouk Yasser on 17/11/2023.
 //
