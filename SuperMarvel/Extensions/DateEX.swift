@@ -6,6 +6,9 @@
 //
 
 import Foundation
+
+// MARK: - Helper Methods
+
 extension DateFormatter {
     static let iso8601Full: DateFormatter = {
         let formatter = DateFormatter()
