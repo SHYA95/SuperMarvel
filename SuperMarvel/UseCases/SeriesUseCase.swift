@@ -1,24 +1,21 @@
 //
-//  CharactersUseCase.swift
+//  SeriesUseCase.swift
 //  SuperMarvel
 //
 //  Created by Shrouk Yasser on 17/11/2023.
 //
-import Foundation
 
-// MARK: - Parameters
+import Foundation
 
 struct SeriesParams {
     let offset: Int
 }
 
-// MARK: - Protocol
-
-protocol SeriesUC {
+protocol SeriesUseCase {
     func execute(with params: SeriesParams, completion: @escaping SeriesResults)
 }
 
-class DefaultSeriesUC: SeriesUC {
+class DefaultSeriesUseCase: SeriesUseCase {
     private var repository: SeriesRepositoryProtocol
 
     init(repository: SeriesRepositoryProtocol) {
@@ -29,3 +26,4 @@ class DefaultSeriesUC: SeriesUC {
         repository.getSeries(offset: params.offset, completion: completion)
     }
 }
+

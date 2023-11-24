@@ -17,14 +17,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="395" height="181"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playstore" translatesAutoresizingMaskIntoConstraints="NO" id="dwy-xQ-cEA">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playstore" translatesAutoresizingMaskIntoConstraints="NO" id="dwy-xQ-cEA">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="180"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="200" id="5Tm-9b-kyi"/>
                             <constraint firstAttribute="height" constant="180" id="NHh-Yl-5me"/>
                         </constraints>
                     </imageView>
-                    <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillProportionally" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6kK-ZS-ilY">
+                    <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6kK-ZS-ilY">
                         <rect key="frame" x="208" y="16" width="179" height="146"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BpW-c1-75b">
@@ -83,11 +82,13 @@
                     <constraint firstItem="dwy-xQ-cEA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4iY-JP-Xpf"/>
                     <constraint firstItem="6kK-ZS-ilY" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.856354" id="6BO-P3-UUk"/>
                     <constraint firstItem="6kK-ZS-ilY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="Bbq-0J-70c"/>
+                    <constraint firstItem="6kK-ZS-ilY" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.453165" id="DNI-MO-YtR"/>
                     <constraint firstAttribute="bottom" secondItem="dwy-xQ-cEA" secondAttribute="bottom" id="GxQ-l7-kru"/>
                     <constraint firstItem="6kK-ZS-ilY" firstAttribute="leading" secondItem="dwy-xQ-cEA" secondAttribute="trailing" constant="8" id="P18-bz-XYG"/>
                     <constraint firstAttribute="trailing" secondItem="6kK-ZS-ilY" secondAttribute="trailing" constant="8" id="T1I-mn-Tp8"/>
                     <constraint firstAttribute="bottom" secondItem="6kK-ZS-ilY" secondAttribute="bottom" constant="16" id="aJd-ah-vJR"/>
                     <constraint firstItem="dwy-xQ-cEA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="jMF-Aq-T9p"/>
+                    <constraint firstItem="dwy-xQ-cEA" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.506329" id="yLJ-4k-DjP"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
