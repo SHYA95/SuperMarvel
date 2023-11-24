@@ -9,80 +9,89 @@ import UIKit
 import NVActivityIndicatorView
 
 class MoviesViewController: UIViewController {
+    
+    // MARK: - Outlets
+    
     @IBOutlet weak var moviesSearchBar: UISearchBar!
     @IBOutlet weak var moviesTableView: UITableView!
-
+    
+    // MARK: - Properties
+    
     var viewModel: SeriesViewModelProtocol!
     var didSelectMovieClosure: ((MarvelResult) -> Void)?
     private var loader: NVActivityIndicatorView?
     
-    func setupLoader() {
-            let loaderSize = CGSize(width: 50, height: 50)
-            let loaderFrame = CGRect(x: (view.bounds.width - loaderSize.width) / 2,
-                                     y: (view.bounds.height - loaderSize.height) / 2,
-                                     width: loaderSize.width,
-                                     height: loaderSize.height)
-
-            loader = NVActivityIndicatorView(frame: loaderFrame, type: .ballClipRotateMultiple, color: .white, padding: 20.0)
-            loader?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-            loader?.layer.cornerRadius = 5.0
-            loader?.isHidden = true
-            view.addSubview(loader!)
-        }
-
-
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        viewModel = SeriesViewModel(seriesUC: DefaultSeriesUseCase(repository: SeriesRepository(seriesRequests: SeriesRequest())))
-        setupLoader()
         setupUI()
+        setupLoaderAndViewModel()
         setupViewModelObservers()
         setupTableView()
-        scrollViewDidScroll(moviesTableView)
-       
-        
-
-        DispatchQueue.main.async {
-            self.showLoader()
-            self.viewModel.getSeries()
-        }
+        loadSeriesData()
     }
-
+    
+    private func setupLoaderAndViewModel() {
+        loader = setupLoader()
+        viewModel = SeriesViewModel(seriesUC: DefaultSeriesUseCase(repository: SeriesRepository(seriesRequests: SeriesRequest())))
+    }
+    
     private func setupViewModelObservers() {
+        viewModel.showLoaderCallback = { [weak self] in
+            self?.showLoaderIfNeeded()
+        }
+
+        viewModel.hideLoaderCallback = { [weak self] in
+            self?.hideLoaderIfNeeded()
+        }
+        
         viewModel.dataUpdated = { [weak self] in
-            DispatchQueue.main.async {
-                self?.hideLoader()
-                self?.moviesTableView.reloadData()
-            }
+            self?.reloadTableViewAndHideLoader()
         }
 
         viewModel.shouldReloadCallback = { [weak self] in
-            DispatchQueue.main.async {
-                self?.hideLoader()
-                self?.moviesTableView.reloadData()
-            }
+            self?.reloadTableViewAndHideLoader()
         }
 
         viewModel.shouldStopRefresherCallback = { [weak self] in
-            DispatchQueue.main.async {
-                self?.hideLoader()
-            }
+            self?.hideLoaderIfNeeded()
         }
 
         viewModel.showErrorMessageCallback = { [weak self] errorMessage in
-            DispatchQueue.main.async {
-                self?.hideLoader()
-            }
+            self?.hideLoaderIfNeeded()
         }
     }
-    func reloadDataOnBack() {
+    
+    // MARK: - Data Loading
+    
+    private func loadSeriesData() {
+        showLoaderIfNeeded()
         viewModel.getSeries()
+    }
+    
+    // MARK: - UI Updates
+    
+    private func showLoaderIfNeeded() {
+        if let loader = loader {
+            showLoader(loader)
+        }
+    }
+    
+    private func hideLoaderIfNeeded() {
+        if let loader = loader {
+            hideLoader(loader)
+        }
+    }
+    
+    private func reloadTableViewAndHideLoader() {
+        hideLoaderIfNeeded()
         moviesTableView.reloadData()
     }
-
+    
+    // MARK: - Table View
+    
     private func setupTableView() {
-        // Assign the search bar delegate
         moviesSearchBar.delegate = self
         moviesTableView.delegate = self
         moviesTableView.dataSource = self
@@ -125,7 +134,6 @@ extension MoviesViewController: UITableViewDelegate {
         return headerView
     }
     
-    // Inside MoviesViewController
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedSeries = viewModel.getSelectedSeries(at: indexPath.section) else {
             return
@@ -133,3 +141,4 @@ extension MoviesViewController: UITableViewDelegate {
         MovingTo.movieDetailsViewController(on: self, selectedSeries: selectedSeries)
     }
 }
+

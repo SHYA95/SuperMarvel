@@ -17,6 +17,8 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var ratingDate: UILabel!
     @IBOutlet weak var releaseTime: UILabel!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var seriesType: UILabel!
+    @IBOutlet weak var modifiedLable: UILabel!
     
     var selectedSeries: MarvelResult?
     var series: MarvelResponse?
@@ -31,56 +33,29 @@ class MovieDetailsViewController: UIViewController {
         
     }
     
-    
-    let randomRating = Int(arc4random_uniform(9) + 1)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupData()
     }
     
-    func setupData() {
-        guard let series = selectedSeries else {
-            return
-        }
-        seriesName.text = series.title
-        
-        if let seriesDescription = series.description, !seriesDescription.isEmpty {
-            descriptionData.text = seriesDescription
-        } else {
-            descriptionData.text = "Description not available on our website. Visit our website for more details."
-        }
-        
-        if let seriesResourceURI = series.resourceURI {
-            descriptionData.text?.append("\n\nURL: \(seriesResourceURI)")
-        }
-        
-        if let seriesModified = series.modified {
-            descriptionData.text?.append("\nModified: \(seriesModified)")
-        }
-        
-        if let seriesRating = series.rating, !seriesRating.isEmpty {
-            ratingDate.text = seriesRating
-        } else {
-            ratingDate.text = "\(randomRating)"
-        }
-        
+    private func setupData() {
+            guard let series = selectedSeries else { return }
+
+            seriesName.text = series.title
+            modifiedLable.text = formattedModifiedDate(from: series.modified)
+            descriptionData.text = seriesDescriptionText(from: series.description)
+            ratingDate.text = seriesRatingText(from: series.rating)
+            seriesType.text = seriesTypeText(from: series.type)
         if let startYear = series.startYear, let endYear = series.endYear {
-            releaseTime.text = "From: \(startYear) To: \(endYear)"
-            endTime.text = "\(endYear)"
-        } else {
-            releaseTime.text = "Not Available"
+                 releaseTime.text = "From: \(startYear) To: \(endYear)"
+                 endTime.text = "\(endYear)"
+             } else {
+                 releaseTime.text = "Not Available"
+             }
+
+            loadImage(from: series.thumbnail?.path)
         }
-        
-        let imagePath = series.thumbnail?.path ?? ""
-        let seriesImageURLString = "\(imagePath).jpg"
-        
-        if let seriesImageURL = URL(string: seriesImageURLString) {
-            detailsImageView.kf.setImage(with: seriesImageURL)
-        } else {
-            print("Invalid URL: \(seriesImageURLString)")
-        }
-    }
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -89,4 +64,40 @@ class MovieDetailsViewController: UIViewController {
     @IBAction func backButtonTapped(_ sender: UIButton) {
         MovingTo.dismissMoviesViewController(on: self)
     }
+
+// MARK: - Helper Methods
+
+    private func formattedModifiedDate(from dateString: String?) -> String {
+        guard let dateString = dateString,
+              let modifiedDate = DateFormatter.iso8601Full.date(from: dateString) else {
+            return "Modified: Not available"
+        }
+
+        return "Modified: \(DateFormatter.localizedString(from: modifiedDate, dateStyle: .medium, timeStyle: .short))"
+    }
+
+    private func seriesDescriptionText(from description: String?) -> String {
+        return description?.isEmpty == false ? description! : "Description not available on our app. Visit our website for more details."
+    }
+
+    private func seriesRatingText(from rating: String?) -> String {
+        return rating?.isEmpty == false ? rating! : "Rated A"
+    }
+
+    private func seriesTypeText(from type: String?) -> String {
+        return type?.isEmpty == false ? type! : "General"
+    }
+
+    
+
+
+    private func loadImage(from path: String?) {
+        guard let imagePath = path, let seriesImageURL = URL(string: "\(imagePath).jpg") else {
+            print("Invalid URL")
+            return
+        }
+
+        detailsImageView.kf.setImage(with: seriesImageURL)
+    }
 }
+
