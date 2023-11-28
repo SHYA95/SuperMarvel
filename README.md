@@ -31,6 +31,8 @@ Contributions are welcome! If you find a bug or have a feature request, please o
 Screenshots
 
 Home Page
+
+
 <img width="367" alt="Screenshot 2023-11-24 at 10 30 07 PM" src="https://github.com/SHYA95/SuperMarvel/assets/101811358/ed100d25-ff8b-4349-8646-79dd5cdb776c">
 
 
